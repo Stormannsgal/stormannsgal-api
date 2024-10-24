@@ -3,13 +3,23 @@
 namespace Stormannsgal\Core\Store;
 
 use Ramsey\Uuid\UuidInterface;
+use Stormannsgal\Core\Entity\AccountCollectionInterface;
+use Stormannsgal\Core\Entity\AccountInterface;
 use Stormannsgal\Core\Type\Email;
 
 interface AccountStoreInterface extends StoreInterface
 {
-    public function findByUuid(UuidInterface $uuid): array;
+    public function insert(AccountInterface $data): true;
 
-    public function findByName(string $name): array;
+    public function update(AccountInterface $data): true;
 
-    public function findByEmail(Email $email): array;
+    public function findById(int $id): ?AccountInterface;
+
+    public function findByUuid(UuidInterface $uuid): ?AccountInterface;
+
+    public function findByName(string $name): ?AccountInterface;
+
+    public function findByEmail(Email $email): ?AccountInterface;
+
+    public function findAll(): AccountCollectionInterface;
 }

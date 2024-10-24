@@ -6,7 +6,11 @@ interface Route
 {
     public const string PING = 'handler.ping';
 
-    public const string ACCOUNT_CREATE = 'account.create';
+    public const string CREATE_ACCOUNT = 'account.create';
 
-    public const string ACCOUNT_LIST_ALL = 'account.list.all';
+    public const string LIST_ALL_ACCOUNT = 'account.list.all';
+
+    public const string AUTHENTICATE_ACCOUNT = 'account.authenticate';
+
+    public const string REFRESH_ACCESS_TOKEN = 'refresh.access.token';
 }

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Stormannsgal\Core\Factory\DatabaseFactory;
-use Stormannsgal\CoreTest\Mock\MockContainer;
+use Stormannsgal\Mock\MockContainer;
 
 class DatabaseFactoryTest extends TestCase
 {

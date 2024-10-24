@@ -61,7 +61,7 @@ abstract class Collection implements CollectionInterface
         $this->position++;
     }
 
-    public function key(): mixed
+    public function key(): int
     {
         return $this->position;
     }

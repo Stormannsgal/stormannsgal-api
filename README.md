@@ -13,6 +13,7 @@
 Und das war es auch schon. SwaggerUI ist über http://localhost/api/docs/ erreichbar.
 Sonstige Services siehe composer.json -> scripts
 
+
 ---
 
 # Stormannsgal - The project driven by megalomania

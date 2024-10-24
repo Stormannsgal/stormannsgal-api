@@ -13,13 +13,12 @@ final class Version20231103223745_CreateAccountTable extends AbstractMigration
         $table = $schema->createTable('Account');
 
         $table->addColumn('id', Types::INTEGER, ['autoincrement' => true, 'unsigned' => true,]);
-        $table->addColumn('uuid', Types::STRING, ['length' => 32]);
-        $table->addColumn('roleId', Types::INTEGER, ['unsigned' => true]);
-        $table->addColumn('name', Types::STRING, ['length' => 64, 'notnull' => false]);
-        $table->addColumn('password', Types::STRING, ['length' => 64]);
-        $table->addColumn('email', Types::STRING, ['length' => 512]);
-        $table->addColumn('registeredAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP', 'notnull' => false,]);
-        $table->addColumn('lastActionAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP', 'notnull' => false,]);
+        $table->addColumn('uuid', Types::STRING, ['length' => 32,]);
+        $table->addColumn('name', Types::STRING, ['length' => 64, 'notnull' => false,]);
+        $table->addColumn('password', Types::STRING, ['length' => 255, 'notnull' => false,]);
+        $table->addColumn('email', Types::STRING, ['length' => 512,]);
+        $table->addColumn('registeredAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP',]);
+        $table->addColumn('lastActionAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP',]);
 
         $table->setPrimaryKey(['id']);
         $table->addUniqueIndex(['uuid'], 'account_uuid_UNIQUE');

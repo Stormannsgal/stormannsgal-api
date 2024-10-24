@@ -10,6 +10,27 @@
         }
     ],
     "paths": {
+        "/token/refresh": {
+            "get": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "If authenticated, a new access token is transmitted",
+                "operationId": "f45f67bb60de0285741ed94b8e554743",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccessToken"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/account": {
             "post": {
                 "tags": [
@@ -24,6 +45,59 @@
                     },
                     "401": {
                         "description": "Unauthorized"
+                    }
+                },
+                "deprecated": true
+            }
+        },
+        "/account/authentication": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Attempts to log in an account using transferred data",
+                "operationId": "6b8f5d9e1eb8aeb554d39143bd77c718",
+                "requestBody": {
+                    "description": "Account data for authentication",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AccountAuthenticationData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RefreshToken"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationFailureMessage"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized access",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationFailureMessage"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -40,7 +114,8 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/ping": {
@@ -57,7 +132,7 @@
                                 "schema": {
                                     "properties": {
                                         "ack": {
-                                            "description": "actually time",
+                                            "description": "actually request time",
                                             "type": "string"
                                         }
                                     },
@@ -71,19 +146,83 @@
         }
     },
     "components": {
+        "schemas": {
+            "AccessToken": {
+                "properties": {
+                    "accessToken": {
+                        "description": "The Token for authorized access",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AccountAuthenticationData": {
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "The E-Mail from Account",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The Password from Account",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "AuthenticationFailureMessage": {
+                "properties": {
+                    "statusCode": {
+                        "description": "The Http Status Code",
+                        "type": "integer"
+                    },
+                    "message": {
+                        "description": "The Failure Message",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "RefreshToken": {
+                "properties": {
+                    "refreshToken": {
+                        "description": "The token after a valid log-in",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
+            "accessToken": {
+                "type": "apiKey",
                 "name": "Authorization",
-                "in": "header",
-                "bearerFormat": "JWT",
-                "scheme": "bearer"
+                "in": "header"
+            },
+            "refreshToken": {
+                "type": "apiKey",
+                "name": "Authentication",
+                "in": "header"
+            },
+            "Client Identification Number": {
+                "type": "apiKey",
+                "name": "x-ident",
+                "in": "header"
             }
         }
     },
     "security": [
         {
-            "bearerAuth": []
+            "accessToken": []
+        },
+        {
+            "Client Identification Number": []
+        },
+        {
+            "refreshToken": []
         }
     ],
     "tags": [

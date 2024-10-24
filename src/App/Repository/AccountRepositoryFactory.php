@@ -2,23 +2,16 @@
 
 namespace Stormannsgal\App\Repository;
 
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use Stormannsgal\App\Hydrator\AccountHydrator;
-use Stormannsgal\App\Table\AccountTable;
+use Stormannsgal\Core\Repository\AccountRepositoryInterface;
+use Stormannsgal\Core\Store\AccountStoreInterface;
 
-class AccountRepositoryFactory
+readonly class AccountRepositoryFactory
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function __invoke(ContainerInterface $container): AccountRepository
+    public function __invoke(ContainerInterface $container): AccountRepositoryInterface
     {
         return new AccountRepository(
-            $container->get(AccountTable::class),
-            $container->get(AccountHydrator::class),
+            $container->get(AccountStoreInterface::class),
         );
     }
 }

@@ -11,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function time;
 
-class PingHandler implements RequestHandlerInterface
+readonly class PingHandler implements RequestHandlerInterface
 {
     #[OA\Get(
         path: '/ping',
@@ -25,7 +25,7 @@ class PingHandler implements RequestHandlerInterface
                         properties: [
                             new OA\Property(
                                 property: 'ack',
-                                description: 'actually time',
+                                description: 'actually request time',
                                 type: 'string'
                             ),
                         ]

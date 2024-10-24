@@ -4,20 +4,21 @@ namespace Stormannsgal\App\Table;
 
 use Envms\FluentPDO\Exception;
 use Envms\FluentPDO\Query;
+use InvalidArgumentException;
 use ReflectionClass;
 use Stormannsgal\Core\Store\StoreInterface;
 
-use function is_array;
 use function substr;
 
 class AbstractTable implements StoreInterface
 {
-    protected readonly string $table;
+    protected string $table;
+    protected Query $query;
 
-    public function __construct(
-        protected readonly Query $query
-    ) {
+    public function __construct(Query $query)
+    {
         $this->table = substr((new ReflectionClass($this))->getShortName(), 0, -5);
+        $this->query = $query;
     }
 
     public function getTableName(): string
@@ -28,22 +29,14 @@ class AbstractTable implements StoreInterface
     /**
      * @throws Exception
      */
-    public function findById(int $id): array
+    public function deleteById(int $id): true
     {
-        $result = $this->query->from($this->table)
-            ->where('id', $id)
-            ->fetch();
+        $result = $this->query->delete($this->table, $id)->execute();
 
-        return is_array($result) ? $result : [];
-    }
+        if ($result === false) {
+            throw new InvalidArgumentException(sprintf('Failed to delete Account table with id: `%s`', $id));
+        }
 
-    /**
-     * @throws Exception
-     */
-    public function findAll(): array
-    {
-        $result = $this->query->from($this->table)->fetchAll();
-
-        return is_array($result) ? $result : [];
+        return true;
     }
 }

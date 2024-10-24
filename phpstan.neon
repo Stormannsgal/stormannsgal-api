@@ -5,7 +5,11 @@ parameters:
 	ignoreErrors:
 		- identifier: missingType.iterableValue
 		- identifier: missingType.generics
+		- '#^Dead catch - PDOException is never thrown in the try block.$#'
 	bootstrapFiles:
 	    - constants.php
+rules:
+	- PHPStan\Rules\Functions\ReturnNullsafeByRefRule
 includes:
 	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon

@@ -6,11 +6,12 @@ use DateTimeImmutable;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Stormannsgal\App\Entity\Account;
+use Stormannsgal\App\Entity\AccountCollection;
+use Stormannsgal\Core\Entity\AccountCollectionInterface;
 use Stormannsgal\Core\Entity\AccountInterface;
-use Stormannsgal\Core\Hydrator\AbstractHydrator;
 use Stormannsgal\Core\Type\Email;
 
-class AccountHydrator extends AbstractHydrator
+readonly class AccountHydrator implements AccountHydratorInterface
 {
     /**
      * @throws Exception
@@ -18,13 +19,51 @@ class AccountHydrator extends AbstractHydrator
     public function hydrate(array $data): AccountInterface
     {
         return new Account(
-            id: $data['id'],
-            uuid: Uuid::fromString($data['uuid']),
-            name: $data['name'],
-            password: $data['password'],
-            email: new Email($data['email']),
-            registeredAt: new DateTimeImmutable($data['registeredAt']),
-            lastActionAt: new DateTimeImmutable($data['lastActionAt']),
+            $data['id'],
+            Uuid::fromString($data['uuid']),
+            $data['name'],
+            $data['password'],
+            new Email($data['email']),
+            new DateTimeImmutable($data['registeredAt']),
+            new DateTimeImmutable($data['lastActionAt']),
         );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function hydrateCollection(array $data): AccountCollectionInterface
+    {
+        $collection = new AccountCollection();
+
+        foreach ($data as $entity) {
+            $collection[] = $this->hydrate($entity);
+        }
+
+        return $collection;
+    }
+
+    public function extract(AccountInterface $object): array
+    {
+        return [
+            'id' => $object->getId(),
+            'uuid' => $object->getUuid()->getHex()->toString(),
+            'name' => $object->getName(),
+            'password' => $object->getPasswordHash(),
+            'email' => $object->getEMail()->toString(),
+            'registeredAt' => $object->getRegisteredAt()->format('Y-m-d H:i:s'),
+            'lastActionAt' => $object->getLastActionAt()->format('Y-m-d H:i:s'),
+        ];
+    }
+
+    public function extractCollection(AccountCollectionInterface $collection): array
+    {
+        $data = [];
+
+        foreach ($collection as $entity) {
+            $data[] = $this->extract($entity);
+        }
+
+        return $data;
     }
 }

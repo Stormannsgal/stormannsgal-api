@@ -6,6 +6,8 @@ use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use Psr\Log\LoggerInterface;
 use Stormannsgal\Core\Listener\LoggingErrorListener;
 use Stormannsgal\Core\Listener\LoggingErrorListenerFactory;
+use Stormannsgal\Core\Validator\Input\EmailInput;
+use Stormannsgal\Core\Validator\Input\PasswordInput;
 
 class ConfigProvider
 {
@@ -21,12 +23,16 @@ class ConfigProvider
     {
         return [
             'invokables' => [
+                EmailInput::class => EmailInput::class,
+                PasswordInput::class => PasswordInput::class,
             ],
             'aliases' => [
             ],
             'factories' => [
                 LoggingErrorListener::class => LoggingErrorListenerFactory::class,
                 Middleware\RouteNotFoundMiddleware::class => ConfigAbstractFactory::class,
+
+                Validator\AuthenticationValidator::class => Validator\AuthenticationValidatorFactory::class,
             ],
         ];
     }

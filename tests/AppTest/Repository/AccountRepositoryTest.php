@@ -1,95 +1,160 @@
 <?php declare(strict_types=1);
 
-namespace AppTest\Repository;
+namespace Stormannsgal\AppTest\Repository;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Stormannsgal\App\Hydrator\AccountHydrator;
+use Stormannsgal\App\Hydrator\AccountHydratorInterface;
 use Stormannsgal\App\Repository\AccountRepository;
 use Stormannsgal\Core\Entity\AccountCollectionInterface;
-use Stormannsgal\Core\Entity\AccountInterface as AccountInterface;
+use Stormannsgal\Core\Entity\AccountInterface;
+use Stormannsgal\Core\Exception\DuplicateEntryException;
 use Stormannsgal\Core\Exception\EmptyResultException;
+use Stormannsgal\Core\Repository\AccountRepositoryInterface;
 use Stormannsgal\Core\Type\Email;
-use Stormannsgal\CoreTest\Mock\Constants\Account;
-use Stormannsgal\CoreTest\Mock\Table\MockAccountTable;
+use Stormannsgal\Mock\Constants\Account;
+use Stormannsgal\Mock\Table\MockAccountTable;
+use Stormannsgal\Mock\Table\MockAccountTableFailed;
 
 class AccountRepositoryTest extends TestCase
 {
-    private AccountRepository $repository;
+    private AccountRepositoryInterface $repository;
+    private AccountHydratorInterface $hydrator;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->repository = new AccountRepository(new MockAccountTable(), new AccountHydrator());
+        $this->repository = new AccountRepository(new MockAccountTable());
+        $this->hydrator = new AccountHydrator();
+    }
+
+    public function testCanInsertAccount(): void
+    {
+        $result = $this->repository->insert($this->hydrator->hydrate(Account::VALID_DATA));
+
+        $this->assertIsBool($result);
+        $this->assertTrue($result);
+    }
+
+    public function testInsertAccountThrowsException(): void
+    {
+        $this->expectException(DuplicateEntryException::class);
+
+        $this->repository->insert($this->hydrator->hydrate(Account::INVALID_DATA));
+    }
+
+    public function testCanUpdateAccount(): void
+    {
+        $result = $this->repository->update($this->hydrator->hydrate(Account::VALID_DATA));
+
+        $this->assertIsBool($result);
+        $this->assertTrue($result);
+    }
+
+    public function testUpdateAccountThrowsException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->repository->update($this->hydrator->hydrate(Account::INVALID_DATA));
+    }
+
+    public function testCanDeleteAccountById(): void
+    {
+        $result = $this->repository->deleteById(Account::ID);
+
+        $this->assertIsBool($result);
+        $this->assertTrue($result);
+    }
+
+    public function testDeleteAccountByIdThrowsInvalidArgumentException(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $this->repository->deleteById(Account::ID_INVALID);
     }
 
     public function testCanFindById(): void
     {
-        $account = $this->repository->findById(Account::ID);
+        $result = $this->repository->findById(Account::ID);
 
-        $this->assertInstanceOf(AccountInterface::class, $account);
-        $this->assertSame(Account::ID, $account->getId());
+        $this->assertInstanceOf(AccountInterface::class, $result);
+        $this->assertSame(Account::VALID_DATA, $this->hydrator->extract($result));
     }
 
-    public function testFindByIdThrowException(): void
+    public function testFindByIdIsEmpty(): void
     {
-        $this->expectException(EmptyResultException::class);
+        $result = $this->repository->findById(Account::ID_INVALID);
 
-        $this->repository->findById(Account::ID_INVALID);
+        $this->assertNull($result);
     }
 
     public function testCanFindByUuid(): void
     {
         $uuid = Uuid::fromString(Account::UUID);
-        $account = $this->repository->findByUuid($uuid);
+        $result = $this->repository->findByUuid($uuid);
 
-        $this->assertInstanceOf(AccountInterface::class, $account);
-        $this->assertSame(Account::UUID, $account->getUuid()->getHex()->toString());
+        $this->assertInstanceOf(AccountInterface::class, $result);
+        $this->assertSame(Account::VALID_DATA, $this->hydrator->extract($result));
     }
 
-    public function testFindByUuidThrowException(): void
+    public function testFindByUuidIsEmtpy(): void
     {
-        $this->expectException(EmptyResultException::class);
-
         $uuid = Uuid::fromString(Account::UUID_INVALID);
-        $this->repository->findByUuid($uuid);
+
+        $result = $this->repository->findByUuid($uuid);
+
+        $this->assertNull($result);
     }
 
     public function testCanFindByName(): void
     {
-        $account = $this->repository->findByName(Account::NAME);
+        $result = $this->repository->findByName(Account::NAME);
 
-        $this->assertInstanceOf(AccountInterface::class, $account);
-        $this->assertSame(Account::NAME, $account->getName());
+        $this->assertInstanceOf(AccountInterface::class, $result);
+        $this->assertSame(Account::VALID_DATA, $this->hydrator->extract($result));
     }
 
-    public function testFindByNameThrowException(): void
+    public function testFindByNameIsEmpty(): void
     {
-        $this->expectException(EmptyResultException::class);
+        $result = $this->repository->findByName(Account::NAME_INVALID);
 
-        $this->repository->findByName(Account::NAME_INVALID);
+        $this->assertNull($result);
     }
 
     public function testCanFindByEmail(): void
     {
-        $account = $this->repository->findByEmail(new Email(Account::EMAIL));
+        $result = $this->repository->findByEmail(new Email(Account::EMAIL));
 
-        $this->assertInstanceOf(AccountInterface::class, $account);
-        $this->assertSame(Account::EMAIL, $account->getEMail()->toString());
+        $this->assertInstanceOf(AccountInterface::class, $result);
+        $this->assertSame(Account::VALID_DATA, $this->hydrator->extract($result));
     }
 
-    public function testFindByEmailThrowException(): void
+    public function testFindByEmailIsEmpty(): void
     {
-        $this->expectException(EmptyResultException::class);
+        $result = $this->repository->findByEmail(new Email(Account::EMAIL_INVALID));
 
-        $this->repository->findByEmail(new Email(Account::EMAIL_INVALID));
+        $this->assertNull($result);
     }
 
     public function testCanFindAll(): void
     {
-        $accounts = $this->repository->findAll();
+        $result = $this->repository->findAll();
 
-        $this->assertInstanceOf(AccountCollectionInterface::class, $accounts);
-        $this->assertInstanceOf(AccountInterface::class, $accounts[0]);
+        $this->assertInstanceOf(AccountCollectionInterface::class, $result);
+        $this->assertArrayHasKey(0, $result);
+        $this->assertInstanceOf(AccountInterface::class, $result[0]);
+        $this->assertSame([0 => Account::VALID_DATA], $this->hydrator->extractCollection($result));
+    }
+
+    public function testFindAllIsEmpty(): void
+    {
+        $repository = new AccountRepository(new MockAccountTableFailed());
+
+        $result = $repository->findAll();
+
+        $this->assertInstanceOf(AccountCollectionInterface::class, $result);
+        $this->assertEmpty($result);
     }
 }

@@ -4,7 +4,7 @@ namespace Stormannsgal\Core\Store;
 
 interface StoreInterface
 {
-    public function findById(int $id): array;
+    public function getTableName(): string;
 
-    public function findAll(): array;
+    public function deleteById(int $id): true;
 }

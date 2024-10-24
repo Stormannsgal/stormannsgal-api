@@ -9,13 +9,14 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class ListAllAccountsHandler implements RequestHandlerInterface
+readonly class ListAllAccountsHandler implements RequestHandlerInterface
 {
     #[OA\Get(
         path: '/account/list/all',
         description: 'All accounts are listed in the list. Whether active, inactive, banned or deleted',
         summary: 'Listing of all accounts',
-        tags: ['Account']
+        tags: ['Account'],
+        deprecated: true
     )]
     #[OA\Response(response: HTTP::STATUS_OK, description: 'Success')]
     public function handle(ServerRequestInterface $request): ResponseInterface

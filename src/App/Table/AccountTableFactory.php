@@ -6,8 +6,9 @@ use Envms\FluentPDO\Query;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Stormannsgal\App\Hydrator\AccountHydratorInterface;
 
-class AccountTableFactory
+readonly class AccountTableFactory
 {
     /**
      * @throws ContainerExceptionInterface
@@ -15,6 +16,9 @@ class AccountTableFactory
      */
     public function __invoke(ContainerInterface $container): AccountTable
     {
-        return new AccountTable($container->get(Query::class));
+        $query = $container->get(Query::class);
+        $hydrator = $container->get(AccountHydratorInterface::class);
+
+        return new AccountTable($query, $hydrator);
     }
 }

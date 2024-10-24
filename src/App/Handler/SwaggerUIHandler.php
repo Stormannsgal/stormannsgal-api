@@ -15,23 +15,34 @@ use Psr\Http\Server\RequestHandlerInterface;
     title: 'Stormannsgal API Overview',
 )]
 #[OA\SecurityScheme(
-    securityScheme: 'bearerAuth',
-    type: 'http',
+    securityScheme: 'accessToken',
+    type: 'apiKey',
     name: 'Authorization',
     in: 'header',
-    bearerFormat: 'JWT',
-    scheme: 'bearer',
 )
 ]
+#[OA\SecurityScheme(
+    securityScheme: 'refreshToken',
+    type: 'apiKey',
+    name: 'Authentication',
+    in: 'header',
+)
+]
+#[OA\SecurityScheme(
+    securityScheme: 'Client Identification Number',
+    type: 'apiKey',
+    name: 'x-ident',
+    in: 'header',
+)]
 #[OA\OpenApi(
     servers: [
         new OA\Server(
             url: '/api'
         ),
     ],
-    security: [['bearerAuth' => []]]
+    security: [['accessToken' => []], ['Client Identification Number' => []], ['refreshToken' => []]]
 )]
-class SwaggerUIHandler implements RequestHandlerInterface
+readonly class SwaggerUIHandler implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

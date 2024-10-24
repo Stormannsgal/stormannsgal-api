@@ -10,10 +10,14 @@ use Mezzio\Helper\ConfigProvider;
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
 $cacheConfig = [
-    'config_cache_path' => ROOT_DIR . 'data/cache/config-cache.php',
+    'config_cache_path' => __DIR__ . '/../data/cache/config-cache.php',
 ];
 
 $aggregator = new ConfigAggregator([
+    \Laminas\InputFilter\ConfigProvider::class,
+    \Laminas\Filter\ConfigProvider::class,
+    \Laminas\Validator\ConfigProvider::class,
+    \Mezzio\Helper\ConfigProvider::class,
     \Laminas\Log\ConfigProvider::class,
     \Mezzio\Tooling\ConfigProvider::class,
     ConfigProvider::class,

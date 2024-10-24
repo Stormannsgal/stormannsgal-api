@@ -26,7 +26,7 @@ return [
         'factories' => [
             'database' => \Stormannsgal\Core\Factory\DatabaseFactory::class,
             'query' => \Stormannsgal\Core\Factory\QueryFactory::class,
-            'logger' => \Stormannsgal\Core\Factory\LoggerFactory::class,
+            'logger' => \Stormannsgal\Core\Logger\LoggerFactory::class,
         ],
         'delegators' => [
             ErrorHandler::class => [

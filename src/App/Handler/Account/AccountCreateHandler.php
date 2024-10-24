@@ -9,13 +9,14 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use OpenApi\Attributes as OA;
 
-class AccountCreateHandler implements RequestHandlerInterface
+readonly class AccountCreateHandler implements RequestHandlerInterface
 {
     #[OA\Post(
         path: '/account',
         description: 'Create new Account',
         summary: 'Create new Account',
-        tags: ['Account']
+        tags: ['Account'],
+        deprecated: true
     )]
     #[OA\Response(response: HTTP::STATUS_OK, description: 'Success')]
     #[OA\Response(response: HTTP::STATUS_UNAUTHORIZED, description: 'Unauthorized')]
