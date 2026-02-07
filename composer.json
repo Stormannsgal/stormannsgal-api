@@ -91,7 +91,7 @@
     "doctrine": "php ./bin/migrations.php",
     "enable-codestandard": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
     "mezzio": "laminas --ansi",
-    "openapi": "vendor/bin/openapi src vendor/exdrals/ -f json -o ./public/api/docs/swagger.json",
+    "openapi": "vendor/bin/openapi src vendor/exdrals/  -e vendor/exdrals/identity/database -f json -o ./public/api/docs/swagger.json",
     "phpcbf": "phpcbf --standard=phpcs.xml -p",
     "phpcs": "phpcs --standard=phpcs.xml -s -p",
     "phplint": "vendor/bin/phplint",
