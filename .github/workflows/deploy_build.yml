@@ -1,4 +1,4 @@
-name: Deployment on Development
+name: Deployment on Build
 on:
   push:
     branches: [ "master" ]
@@ -80,7 +80,7 @@ jobs:
 
   # 3. Deployment
   deploy:
-    name: Deploy to Dev
+    name: Deploy to Build
     needs: tests
     runs-on: ubuntu-latest
     steps:
@@ -121,7 +121,7 @@ jobs:
           severity: ${{ job.status == 'success' && 'info' || 'error' }}
           details: >-
             ${{ job.status == 'success' 
-                && '[🚀 Successful deployment to dev!](https://dev.stormannsgal.de/api/docs)' 
+                && '[🚀 Successful deployment to build!](https://build.stormannsgal.de/api/docs)' 
                 || format('[❌ Deployment failed! View Logs](https://github.com/{0}/actions/runs/{1})', github.repository, github.run_id) 
             }}
           webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}
