@@ -1,0 +1,107 @@
+{
+  "name": "stormannsgal/stormannsgal-api",
+  "description": "The project is driven by megalomania",
+  "type": "project",
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "Browser Game",
+    "OpenSource"
+  ],
+  "homepage": "https://github.com/stormannsgal",
+  "support": {
+    "docs": "https://github.com/stormannsgal",
+    "issues": "https://github.com/stormannsgal/stormannsgal-api/issues",
+    "source": "https://github.com/stormannsgal/stormannsgal-api"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "laminas/laminas-component-installer": true,
+      "pestphp/pest-plugin": true
+    },
+    "platform": {
+      "php": "8.4.16"
+    },
+    "sort-packages": true
+  },
+  "extra": {
+    "laminas": {
+      "component-auto-installs": [
+        "mezzio/mezzio",
+        "mezzio/mezzio-helpers",
+        "mezzio/mezzio-router",
+        "laminas/laminas-httphandlerrunner",
+        "mezzio/mezzio-fastroute"
+      ]
+    }
+  },
+  "require": {
+    "php": "~8.4.0",
+    "ext-json": "*",
+    "ext-openssl": "*",
+    "ext-pdo": "*",
+    "exdrals/core": "^0.1.0",
+    "exdrals/identity": "^0.1.0"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+    "doctrine/migrations": "^3.6",
+    "fakerphp/faker": "^1.24",
+    "filp/whoops": "^2.7.1",
+    "helmich/phpunit-json-assert": "^3.5",
+    "helmich/phpunit-psr7-assert": "^4.4",
+    "mockery/mockery": "^1.6",
+    "overtrue/phplint": "^9.0",
+    "pestphp/pest": "^v3.7",
+    "phpstan/phpstan": "^2.1.33",
+    "phpstan/phpstan-deprecation-rules": "^2.0.3",
+    "phpunit/php-code-coverage": "^11.0.0",
+    "phpunit/phpunit": "^11.5.0",
+    "roave/security-advisories": "dev-master",
+    "slevomat/coding-standard": "^8.15",
+    "squizlabs/php_codesniffer": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Stormannsgal\\": "src/",
+      "Stormannsgal\\App\\": "src/App/",
+      "Stormannsgal\\App\\Shared\\": "src/App/Shared/src/",
+      "Stormannsgal\\Game\\": "src/Game/",
+      "Stormannsgal\\Game\\Shared\\": "src/Game/Shared/src/",
+      "Stormannsgal\\Migrations\\": "database/migrations/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "check": [
+      "@phplint",
+      "@phpcs",
+      "@phpstan",
+      "@test"
+    ],
+    "clear-config-cache": "php bin/clear-config-cache.php",
+    "development-disable": "laminas-development-mode disable",
+    "development-enable": "laminas-development-mode enable",
+    "development-status": "laminas-development-mode status",
+    "doctrine": "php ./bin/migrations.php",
+    "enable-codestandard": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
+    "mezzio": "laminas --ansi",
+    "openapi": "php ./vendor/bin/openapi ./src ./vendor/exdrals/identity/src -f json -o ./public/api/docs/swagger.json",
+    "phpcbf": "phpcbf --standard=phpcs.xml -p",
+    "phpcs": "phpcs --standard=phpcs.xml -s -p",
+    "phplint": "vendor/bin/phplint",
+    "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
+    "pest": "vendor/bin/pest",
+    "post-create-project-cmd": [
+      "@development-enable"
+    ],
+    "test": [
+      "@pest"
+    ]
+  }
+}

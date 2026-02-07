@@ -1,0 +1,21 @@
+parameters:
+	level: 6
+	phpVersion: 80400
+	paths:
+		- src
+	ignoreErrors:
+		- identifier: missingType.iterableValue
+		- identifier: missingType.generics
+	bootstrapFiles:
+		- constants.php
+	checkUninitializedProperties: true
+	tips:
+		treatPhpDocTypesAsCertain: false
+	excludePaths:
+		- tests/*
+		- tests
+rules:
+	- PHPStan\Rules\Functions\ReturnNullsafeByRefRule
+includes:
+	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
+	- vendor/phpstan/phpstan/conf/bleedingEdge.neon
