@@ -86,8 +86,8 @@
       "App\\Mailing\\": "src/App/Mailing/",
       "App\\Token\\": "src/App/Token/",
 
-      "Game\\Character\\": "src/Game/Character/src",
-      "Game\\Shared\\": "src/Game/Shared/src",
+      "Game\\Character\\": "src/Game/Character/",
+      "Game\\Shared\\": "src/Game/Shared/",
       "Core\\Clock\\": "src/Core/Clock/",
       "Core\\Http\\": "src/Core/Http/",
       "Core\\Observability\\": "src/Core/Observability/",

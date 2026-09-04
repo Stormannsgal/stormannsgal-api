@@ -9,8 +9,8 @@ class ConfigProvider
     public function __invoke(): array
     {
         $aggregator = new ConfigAggregator([
-            \Game\Shared\ConfigProvider::class,
-            \Game\Character\ConfigProvider::class,
+            Shared\ConfigProvider::class,
+            Character\ConfigProvider::class,
         ]);
 
         return $aggregator->getMergedConfig();
