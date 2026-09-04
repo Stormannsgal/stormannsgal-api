@@ -13,6 +13,7 @@ use Tests\TestIntegrationCase;
 | need to change it using the "uses()" function to bind a different classes or traits.
 |
 */
+// 1. APP_ENV Logik: Priorität für GHA (action)
 $appEnv = getenv('APP_ENV') ?: 'testing';
 if ($appEnv !== 'action') {
     $appEnv = 'testing';
@@ -20,11 +21,17 @@ if ($appEnv !== 'action') {
 putenv("APP_ENV=$appEnv");
 $_ENV['APP_ENV'] = $appEnv;
 
-(function () {
+if (! array_reduce(
+    $_SERVER['argv'] ?? [],
+    static fn (bool $hasUnitPath, string $argument): bool => $hasUnitPath || str_contains($argument, 'tests/Unit'),
+    false,
+)) {
+    // 1. APP_ENV Logik: Priorität für GHA (action)
     $appEnv = getenv('APP_ENV') ?: 'testing';
     putenv("APP_ENV=$appEnv");
     $_ENV['APP_ENV'] = $appEnv;
 
+    // 2. DB Host Erkennung
     $dbHost = getenv('DB_HOST') ?: (getenv('GITHUB_ACTIONS') ? '127.0.0.1' : 'database-testing');
     $dbPort = (int)(getenv('DB_PORT') ?: 3306);
 
@@ -32,7 +39,7 @@ $_ENV['APP_ENV'] = $appEnv;
     fwrite(STDOUT, "[Setup] Waiting for database $dbHost:$dbPort...\n");
 
     $bin = __DIR__ . '/../bin/migrations.php';
-    $maxTries = 20;
+    $maxTries = 20; // Mehr Puffer für GHA
 
     $connected = false;
     for ($i = 0; $i < $maxTries; $i++) {
@@ -61,7 +68,7 @@ $_ENV['APP_ENV'] = $appEnv;
         exit($resultCode);
     }
     fwrite(STDOUT, "[Setup] Database ready.\n\n");
-})();
+}
 
 uses(TestIntegrationCase::class)->beforeEach(function () {
     /** @var PDO $pdo */
@@ -112,6 +119,7 @@ expect()->extend('toHaveRecord', function (array $criteria) {
     return $this;
 });
 
+// Optional: Das Gegenteil (dontSeeInDatabase)
 expect()->extend('toNotHaveRecord', function (array $criteria) {
     $container = test()->getContainer();
 

@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use Exdrals\Identity\Middleware\Account\LastActivityUpdaterMiddleware;
-use Exdrals\Identity\Middleware\Account\RequestAuthenticationMiddleware;
-use Exdrals\Identity\Middleware\ClientIdentification\ClientIdentificationMiddleware;
 use Mezzio\Application;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Handler\NotFoundHandler;
@@ -17,9 +14,15 @@ use Mezzio\Router\Middleware\ImplicitHeadMiddleware;
 use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
+use App\Account\Identity\Middleware\Account\AccountActivityLoggingMiddleware;
+use App\Account\Identity\Middleware\Account\LastActivityUpdaterMiddleware;
+use App\Account\Identity\Middleware\Account\RequestAuthenticationMiddleware;
+use App\Account\Identity\Middleware\ClientIdentification\ClientIdentificationMiddleware;
+use Core\Http\Middleware\ApiErrorHandlerMiddleware;
+use Core\Http\Middleware\RequestCorrelationMiddleware;
+use Core\Http\Middleware\RequestLoggingMiddleware;
+use Core\Http\Middleware\RouteNotFoundMiddleware;
 use Psr\Container\ContainerInterface;
-use Exdrals\Shared\Middleware\ApiErrorHandlerMiddleware;
-use Exdrals\Shared\Middleware\RouteNotFoundMiddleware;
 
 /**
  * Setup middleware pipeline:
@@ -28,6 +31,8 @@ use Exdrals\Shared\Middleware\RouteNotFoundMiddleware;
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->pipe([
         CorsMiddleware::class,
+        RequestCorrelationMiddleware::class,
+        RequestLoggingMiddleware::class,
         ApiErrorHandlerMiddleware::class,
         ServerUrlMiddleware::class,
         BodyParamsMiddleware::class,
@@ -43,6 +48,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
         ClientIdentificationMiddleware::class,
         RequestAuthenticationMiddleware::class,
         LastActivityUpdaterMiddleware::class,
+        AccountActivityLoggingMiddleware::class,
 
         DispatchMiddleware::class,
 

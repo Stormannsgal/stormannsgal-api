@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Stormannsgal\Game\Shared;
+namespace Game\Shared;
 
 use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
 use Laminas\ServiceManager\Factory\InvokableFactory;
-use Stormannsgal\Shared\Middleware\PaginationMiddleware;
 
 class ConfigProvider
 {

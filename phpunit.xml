@@ -5,23 +5,29 @@
          colors="true"
          cacheDirectory=".phpunit.cache"
          displayDetailsOnIncompleteTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
 >
     <php>
         <env name="APP_ENV" value="testing"/>
     </php>
     <testsuites>
-        <testsuite name="Test Suite">
-            <directory suffix="Test.php">./tests</directory>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Integration</directory>
         </testsuite>
     </testsuites>
     <source>
         <include>
+            <directory suffix=".php">./app</directory>
             <directory suffix=".php">./src</directory>
         </include>
     </source>
     <coverage>
         <report>
-            <clover outputFile=".phpunit.cache/stormannsgal@tests.xml"/>
+            <clover outputFile=".phpunit.cache/code-coverage/stormannsgal@tests.xml"/>
             <html outputDirectory=".phpunit.cache/build/coverage"/>
         </report>
     </coverage>

@@ -13,12 +13,12 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Laminas\ServiceManager\ConfigProvider::class,
     \Mezzio\Cors\ConfigProvider::class,
     \Laminas\InputFilter\ConfigProvider::class,
     \Laminas\Filter\ConfigProvider::class,
     \Laminas\Validator\ConfigProvider::class,
     \Mezzio\Helper\ConfigProvider::class,
-    \Mezzio\Tooling\ConfigProvider::class,
     \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     // Include cache configuration
@@ -33,8 +33,6 @@ $aggregator = new ConfigAggregator([
         return [];
     },
     // Default App module config
-    \Exdrals\Core\ConfigProvider::class,
-    \Exdrals\Identity\ConfigProvider::class,
     \Stormannsgal\ConfigProvider::class,
 
     // Load application config in a pre-defined order in such a way that local settings

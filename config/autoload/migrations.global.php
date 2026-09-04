@@ -11,7 +11,7 @@ return [
         ],
 
         'migrations_paths' => [
-            'Stormannsgal\\Migrations' => 'database/migrations',
+            'Migrations' => 'database/migrations',
         ],
 
         'all_or_nothing' => true,

@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-use Exdrals\Shared\Infrastructure\Factory\MailFactory;
+use Core\Persistence\Factory\DatabaseFactory;
+use Core\Persistence\Factory\QueryFactory;
+use Core\SharedKernel\Factory\UuidFactory;
+use Core\Observability\LoggerFactory;
+use Core\SharedKernel\Utils\UuidFactoryInterface;
 use Mezzio\Application;
 use Mezzio\Container\ApplicationConfigInjectionDelegator;
-use Exdrals\Shared\Infrastructure\Factory\DatabaseFactory;
-use Exdrals\Shared\Infrastructure\Factory\QueryFactory;
-use Exdrals\Shared\Infrastructure\Factory\UuidFactory;
-use Exdrals\Shared\Infrastructure\Logger\LoggerFactory;
-use Exdrals\Shared\Utils\UuidFactoryInterface;
 
 return [
     // Provides application-wide services.

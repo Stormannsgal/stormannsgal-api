@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Stormannsgal\Game;
+namespace Game;
 
 use Laminas\ConfigAggregator\ConfigAggregator;
 
@@ -9,7 +9,8 @@ class ConfigProvider
     public function __invoke(): array
     {
         $aggregator = new ConfigAggregator([
-            \Stormannsgal\Game\Shared\ConfigProvider::class,
+            \Game\Shared\ConfigProvider::class,
+            \Game\Character\ConfigProvider::class,
         ]);
 
         return $aggregator->getMergedConfig();

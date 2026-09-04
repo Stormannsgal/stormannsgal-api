@@ -1,17 +1,17 @@
 {
   "name": "stormannsgal/stormannsgal-api",
-  "description": "The project is driven by megalomania",
+  "description": "Stormannsgal API",
   "type": "project",
   "license": "BSD-3-Clause",
   "keywords": [
-    "Browser Game",
+    "Stormannsgal",
     "OpenSource"
   ],
-  "homepage": "https://github.com/stormannsgal",
+  "homepage": "https://github.com/Stormannsgal/stormannsgal-api",
   "support": {
-    "docs": "https://github.com/stormannsgal",
-    "issues": "https://github.com/stormannsgal/stormannsgal-api/issues",
-    "source": "https://github.com/stormannsgal/stormannsgal-api"
+    "docs": "https://github.com/Stormannsgal/stormannsgal-api",
+    "issues": "https://github.com/Stormannsgal/stormannsgal-api/issues",
+    "source": "https://github.com/Stormannsgal/stormannsgal-api"
   },
   "config": {
     "allow-plugins": {
@@ -37,39 +37,67 @@
     }
   },
   "require": {
-    "php": "~8.4.0",
+    "php": "^8.4.0",
     "ext-json": "*",
     "ext-openssl": "*",
     "ext-pdo": "*",
-    "exdrals/core": "^0.1.0",
-    "exdrals/identity": "^0.1.0"
+    "envms/fluentpdo": "^2.2",
+    "firebase/php-jwt": "^7.0",
+    "jetbrains/phpstorm-attributes": "^1.0",
+    "laminas/laminas-component-installer": "^2.6 || ^3.0",
+    "laminas/laminas-config-aggregator": "^1.6",
+    "laminas/laminas-development-mode": "^3.3.0",
+    "laminas/laminas-diactoros": "^3.8.0",
+    "laminas/laminas-filter": "^3.4",
+    "laminas/laminas-inputfilter": "3.0.x-dev",
+    "laminas/laminas-servicemanager": "^4.0",
+    "laminas/laminas-stdlib": "^3.6",
+    "laminas/laminas-validator": "^3.0",
+    "mezzio/mezzio": "^3",
+    "mezzio/mezzio-cors": "^1.13",
+    "mezzio/mezzio-fastroute": "^3.0.3",
+    "mezzio/mezzio-helpers": "^5.7",
+    "monolog/monolog": "^3.9.0",
+    "ramsey/uuid": "^4.7",
+    "symfony/mailer": "^8.1",
+    "zircote/swagger-php": "^6"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
     "doctrine/migrations": "^3.6",
     "fakerphp/faker": "^1.24",
     "filp/whoops": "^2.7.1",
-    "helmich/phpunit-json-assert": "^3.5",
-    "helmich/phpunit-psr7-assert": "^4.4",
     "mockery/mockery": "^1.6",
     "overtrue/phplint": "^9.0",
-    "pestphp/pest": "^v3.7",
+    "pestphp/pest": "^v5.0",
     "phpstan/phpstan": "^2.1.33",
     "phpstan/phpstan-deprecation-rules": "^2.0.3",
-    "phpunit/php-code-coverage": "^11.0.0",
-    "phpunit/phpunit": "^11.5.0",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "phpunit/php-code-coverage": "^14.0.0",
+    "phpunit/phpunit": "^13.3.0",
     "roave/security-advisories": "dev-master",
     "slevomat/coding-standard": "^8.15",
     "squizlabs/php_codesniffer": "^4.0"
   },
   "autoload": {
     "psr-4": {
-      "Stormannsgal\\": "src/",
-      "Stormannsgal\\App\\": "src/App/",
-      "Stormannsgal\\App\\Shared\\": "src/App/Shared/src/",
-      "Stormannsgal\\Game\\": "src/Game/",
-      "Stormannsgal\\Game\\Shared\\": "src/Game/Shared/src/",
-      "Stormannsgal\\Migrations\\": "database/migrations/"
+
+      "App\\Account\\Identity\\": "src/App/Account/Identity/",
+      "App\\Mailing\\": "src/App/Mailing/",
+      "App\\Token\\": "src/App/Token/",
+
+      "Game\\Character\\": "src/Game/Character/src",
+      "Game\\Shared\\": "src/Game/Shared/src",
+      "Core\\Clock\\": "src/Core/Clock/",
+      "Core\\Http\\": "src/Core/Http/",
+      "Core\\Observability\\": "src/Core/Observability/",
+      "Core\\Persistence\\": "src/Core/Persistence/",
+      "Core\\Serialization\\": "src/Core/Serialization/",
+      "Core\\SharedKernel\\": "src/Core/SharedKernel/",
+      "App\\": "src/App/",
+      "Core\\": "src/Core/",
+      "Game\\": "src/Game",
+      "Stormannsgal\\": "src/"
     }
   },
   "autoload-dev": {
@@ -90,8 +118,7 @@
     "development-status": "laminas-development-mode status",
     "doctrine": "php ./bin/migrations.php",
     "enable-codestandard": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run",
-    "mezzio": "laminas --ansi",
-    "openapi": "vendor/bin/openapi src vendor/exdrals/  -e vendor/exdrals/identity/database -f json -o ./public/api/docs/swagger.json",
+    "openapi": "php ./vendor/bin/openapi ./src -f json -o ./public/api/docs/swagger.json",
     "phpcbf": "phpcbf --standard=phpcs.xml -p",
     "phpcs": "phpcs --standard=phpcs.xml -s -p",
     "phplint": "vendor/bin/phplint",

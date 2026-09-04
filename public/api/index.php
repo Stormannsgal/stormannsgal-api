@@ -10,11 +10,16 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
 }
 
 chdir(dirname(__DIR__));
-require_once __DIR__ . '/../../constants.php';
 require './../vendor/autoload.php';
 
 if (file_exists('./../.env')) {
-    putenv('APP_ENV=develope');
+    $envValues = parse_ini_file('./../.env');
+    $appEnv = is_array($envValues) ? ($envValues['APP_ENV'] ?? '') : '';
+    if ($appEnv !== '') {
+        putenv("APP_ENV=$appEnv");
+        $_ENV['APP_ENV'] = $appEnv;
+        $_SERVER['APP_ENV'] = $appEnv;
+    }
 }
 
 /**

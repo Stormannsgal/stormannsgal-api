@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-use Exdrals\Shared\Domain\Enum\Router\RouteIdent;
 use Mezzio\Application;
 use Mezzio\MiddlewareFactory;
+use Core\Http\Enum\RouteIdent;
+use Core\Http\Handler\PingHandler;
+use Core\Http\Handler\SwaggerUIHandler;
 use Psr\Container\ContainerInterface;
-use Stormannsgal\App\Shared\Handler\PingHandler;
-use Stormannsgal\App\Shared\Handler\SwaggerUIHandler;
 
 return static function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get(

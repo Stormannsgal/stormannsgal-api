@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
+use App\Account\Identity\Application\Port\ActivityLoggerInterface;
+use Core\Persistence\Factory\DatabaseFactory;
+use Core\Persistence\Factory\QueryFactory;
+use Core\SharedKernel\Factory\UuidFactory;
+use Core\Observability\LoggerFactory;
+use Core\SharedKernel\Utils\UuidFactoryInterface;
 use Mezzio\Application;
 use Mezzio\Container\ApplicationConfigInjectionDelegator;
-use Exdrals\Shared\Infrastructure\Factory\DatabaseFactory;
-use Exdrals\Shared\Infrastructure\Factory\QueryFactory;
-use Exdrals\Shared\Infrastructure\Factory\UuidFactory;
-use Exdrals\Shared\Infrastructure\Logger\LoggerFactory;
-use Exdrals\Shared\Utils\UuidFactoryInterface;
+use Tests\Integration\Mock\ArrayLogger;
 use Tests\Integration\Mock\NullMailerFactory;
 
 return [
@@ -29,6 +31,7 @@ return [
         // not require arguments to the constructor. Map a service name to the
         // class name.
         'invokables' => [
+            ActivityLoggerInterface::class => ArrayLogger::class,
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [

@@ -1,0 +1,41 @@
+<?php declare(strict_types=1);
+
+namespace Game\Character;
+
+use Laminas\ServiceManager\AbstractFactory\ConfigAbstractFactory;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+
+class ConfigProvider
+{
+    public function __invoke(): array
+    {
+        return [
+            'routes' => $this->getRoutes(),
+            'dependencies' => $this->getDependencies(),
+            ConfigAbstractFactory::class => $this->getAbstractFactoryConfig(),
+        ];
+    }
+
+    public function getRoutes(): array
+    {
+        return [];
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            'aliases' => [
+            ],
+            'invokables' => [
+            ],
+            'factories' => [
+            ],
+        ];
+    }
+
+    public function getAbstractFactoryConfig(): array
+    {
+        return [];
+    }
+
+}

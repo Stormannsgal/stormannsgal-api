@@ -1,11 +1,13 @@
 <?php declare(strict_types=1);
 
-use Exdrals\Shared\Infrastructure\Factory\DatabaseFactory;
-use Exdrals\Shared\Infrastructure\Factory\QueryFactory;
-use Exdrals\Shared\Infrastructure\Factory\UuidFactory;
-use Exdrals\Shared\Utils\UuidFactoryInterface;
-use Tests\Integration\Mock\NullMailerFactory;
+use App\Account\Identity\Application\Port\ActivityLoggerInterface;
+use Core\Persistence\Factory\DatabaseFactory;
+use Core\Persistence\Factory\QueryFactory;
+use Core\SharedKernel\Factory\UuidFactory;
+use Core\SharedKernel\Utils\UuidFactoryInterface;
 use Tests\Integration\Mock\NullLoggerFactory;
+use Tests\Integration\Mock\NullMailerFactory;
+use Tests\Integration\Mock\ArrayLogger;
 
 return [
     'dependencies' => [
@@ -17,6 +19,7 @@ return [
             Symfony\Component\Mailer\MailerInterface::class => 'mailer',
         ],
         'invokables' => [
+            ActivityLoggerInterface::class => ArrayLogger::class,
         ],
         'factories' => [
             'database' => DatabaseFactory::class,
