@@ -10,6 +10,7 @@ class ConfigProvider
     {
         $aggregator = new ConfigAggregator([
             \Stormannsgal\Game\Shared\ConfigProvider::class,
+            \Stormannsgal\Game\Character\ConfigProvider::class,
         ]);
 
         return $aggregator->getMergedConfig();

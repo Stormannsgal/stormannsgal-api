@@ -68,6 +68,7 @@
       "Stormannsgal\\App\\": "src/App/",
       "Stormannsgal\\App\\Shared\\": "src/App/Shared/src/",
       "Stormannsgal\\Game\\": "src/Game/",
+      "Stormannsgal\\Game\\Character\\": "src/Game/Character/src/",
       "Stormannsgal\\Game\\Shared\\": "src/Game/Shared/src/",
       "Stormannsgal\\Migrations\\": "database/migrations/"
     }
