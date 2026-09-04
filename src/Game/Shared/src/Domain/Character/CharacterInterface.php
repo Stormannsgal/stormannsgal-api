@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Stormannsgal\Game\Shared\Domain\Character;
+namespace Game\Shared\Domain\Character;
 
-use Ramsey\Uuid\UuidInterface;
 use Game\Shared\Domain\Character\Enum\Gender;
+use Ramsey\Uuid\UuidInterface;
 
 interface CharacterInterface
 {

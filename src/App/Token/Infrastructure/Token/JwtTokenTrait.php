@@ -1,0 +1,42 @@
+<?php declare(strict_types=1);
+
+namespace App\Token\Infrastructure\Token;
+
+use DomainException;
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Firebase\JWT\SignatureInvalidException;
+use InvalidArgumentException;
+use UnexpectedValueException;
+
+trait JwtTokenTrait
+{
+    public function isValid(#[\SensitiveParameter] string $token): bool
+    {
+        try {
+            JWT::decode($token, new Key($this->config->key, $this->config->algorithmus));
+        } catch (
+            InvalidArgumentException
+            | DomainException
+            | UnexpectedValueException
+            | SignatureInvalidException
+            | BeforeValidException
+            | ExpiredException $e
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function decode(#[\SensitiveParameter] string $token): object
+    {
+        if (!$this->isValid($token)) {
+            return throw new InvalidArgumentException();
+        }
+
+        return JWT::decode($token, new Key($this->config->key, $this->config->algorithmus));
+    }
+}

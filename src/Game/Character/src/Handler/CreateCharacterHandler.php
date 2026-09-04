@@ -2,7 +2,6 @@
 
 namespace Game\Character\Handler;
 
-readonly class CreateCharacterHandler
+readonly final class CreateCharacterHandler
 {
-
 }

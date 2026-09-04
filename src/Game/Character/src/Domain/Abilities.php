@@ -2,7 +2,6 @@
 
 namespace Game\Character\Domain;
 
-readonly class Abilities
+readonly final class Abilities
 {
-
 }

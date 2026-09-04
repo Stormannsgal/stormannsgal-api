@@ -2,7 +2,6 @@
 
 namespace Game\Character\Domain;
 
-readonly class Character
+readonly final class Character
 {
-
 }
