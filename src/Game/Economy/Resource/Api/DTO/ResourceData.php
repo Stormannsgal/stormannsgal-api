@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Game\Economy\Catalog\Api\DTO;
+namespace Game\Economy\Resource\Api\DTO;
 
-use Game\Economy\Catalog\Api\Enum\ResourceCategory;
+use Game\Economy\Resource\Api\Enum\ResourceCategory;
 
 readonly final class ResourceData
 {

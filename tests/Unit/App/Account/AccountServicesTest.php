@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\App\Account;
 
-use App\Account\Identity\Application\Port\ActivityLoggerInterface;
+use App\Account\Identity\Api\ActivityLoggerInterface;
 use App\Account\Identity\Domain\Account;
 use App\Account\Identity\Domain\AccountAccessAuth;
 use App\Account\Identity\Domain\Exception\PasswordMismatchException;

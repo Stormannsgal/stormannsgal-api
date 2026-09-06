@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Tests\Unit\Game\Economy\Catalog\Domain\Models;
+namespace Tests\Unit\Game\Economy\Resource\Domain\Models;
 
-use Game\Economy\Catalog\Api\Enum\ResourceCategory;
-use Game\Economy\Catalog\Domain\Entities\Resource;
+use Game\Economy\Resource\Api\Enum\ResourceCategory;
+use Game\Economy\Resource\Domain\Entities\Resource;
 use InvalidArgumentException;
 
 use function expect;

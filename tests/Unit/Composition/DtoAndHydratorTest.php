@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Composition;
 
-use App\Account\Identity\Application\Port\IdentityLoggerInterface;
+use App\Account\Identity\Api\IdentityLoggerInterface;
 use App\Account\Identity\DTO\Account\Account as AccountDto;
 use App\Account\Identity\DTO\Account\AccountRegistration;
 use App\Account\Identity\DTO\Client\ClientIdentificationData;

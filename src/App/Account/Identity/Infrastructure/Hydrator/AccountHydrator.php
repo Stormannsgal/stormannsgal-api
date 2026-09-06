@@ -2,7 +2,7 @@
 
 namespace App\Account\Identity\Infrastructure\Hydrator;
 
-use App\Account\Identity\Application\Port\IdentityLoggerInterface;
+use App\Account\Identity\Api\IdentityLoggerInterface;
 use App\Account\Identity\Domain\Account;
 use App\Account\Identity\Domain\AccountCollection;
 use App\Account\Identity\Domain\AccountCollectionInterface;

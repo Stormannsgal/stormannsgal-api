@@ -2,7 +2,7 @@
 
 namespace Tests\Integration\Composition;
 
-use App\Account\Identity\Application\Port\IdentityLoggerInterface;
+use App\Account\Identity\Api\IdentityLoggerInterface;
 use App\Account\Identity\Infrastructure\Hydrator\AccountAccessAuthHydrator;
 use App\Account\Identity\Infrastructure\Hydrator\AccountActivationHydrator;
 use App\Account\Identity\Infrastructure\Hydrator\AccountHydrator;

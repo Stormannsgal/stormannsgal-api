@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Game\Economy\Catalog\Domain\Entities;
+namespace Game\Economy\Resource\Domain\Entities;
 
-use Game\Economy\Catalog\Api\Enum\ResourceCategory;
+use Game\Economy\Resource\Api\Enum\ResourceCategory;
 use InvalidArgumentException;
 
 final class Resource

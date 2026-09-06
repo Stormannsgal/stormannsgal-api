@@ -2,7 +2,7 @@
 
 namespace App\Account\Identity\Handler;
 
-use App\Account\Identity\Application\Port\AccountRegisterServiceInterface;
+use App\Account\Identity\Api\AccountRegisterServiceInterface;
 use App\Mailing\Domain\EmailType;
 use App\Mailing\DTO\EMail;
 use Core\Http\DTO\HttpResponseMessage;

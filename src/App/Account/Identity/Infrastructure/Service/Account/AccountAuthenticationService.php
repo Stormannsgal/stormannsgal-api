@@ -2,8 +2,8 @@
 
 namespace App\Account\Identity\Infrastructure\Service\Account;
 
-use App\Account\Identity\Application\Port\ActivityLoggerInterface;
-use App\Account\Identity\Application\Port\EmailHashSaltProviderInterface;
+use App\Account\Identity\Api\ActivityLoggerInterface;
+use App\Account\Identity\Api\EmailHashSaltProviderInterface;
 use App\Account\Identity\Domain\AccountAccessAuth;
 use App\Account\Identity\Domain\Exception\AccountNotFoundException;
 use App\Account\Identity\Domain\Exception\DuplicateAuthException;
