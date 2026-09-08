@@ -1,4 +1,5 @@
 .idea/
+.opencode/
 /tests/behat.yml
 /tests/.phpunit.result.cache
 /vendor/

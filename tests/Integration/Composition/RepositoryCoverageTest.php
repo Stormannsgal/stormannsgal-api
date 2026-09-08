@@ -2,8 +2,6 @@
 
 namespace Tests\Integration\Composition;
 
-use DateTimeImmutable;
-use Mockery;
 use App\Account\Identity\Domain\Account;
 use App\Account\Identity\Domain\AccountAccessAuth;
 use App\Account\Identity\Domain\AccountActivation;
@@ -16,13 +14,16 @@ use App\Account\Identity\Infrastructure\Persistence\Repository\AccountRepository
 use App\Account\Identity\Infrastructure\Persistence\Table\AccountAccessAuthStoreInterface;
 use App\Account\Identity\Infrastructure\Persistence\Table\AccountActivationStoreInterface;
 use App\Account\Identity\Infrastructure\Persistence\Table\AccountStoreInterface;
-use App\Mailing\Domain\EmailType;
-use App\Token\Domain\Enum\TokenType;
-use App\Token\Domain\Token;
+use App\Mailing\Api\EmailType;
+use App\Token\Api\DTO\RawTokenDto;
+use App\Token\Api\Enum\TokenType;
+use App\Token\Domain\Entity\Token;
 use App\Token\Infrastructure\Hydrator\TokenHydratorInterface;
 use App\Token\Infrastructure\Persistence\Repository\TokenRepository;
 use App\Token\Infrastructure\Persistence\Table\TokenStoreInterface;
 use Core\SharedKernel\Domain\Exception\EmptyResultException;
+use DateTimeImmutable;
+use Mockery;
 use Ramsey\Uuid\Uuid;
 
 use function expect;
@@ -30,7 +31,7 @@ use function test;
 
 test('repositories delegate persistence and queries to their store', function () {
     $account = new Account(1, Uuid::uuid4(), 'Account', 'hash', EmailType::fromString('repo@example.com'), new DateTimeImmutable(), null);
-    $auth = new AccountAccessAuth(1, 1, 'web', 'refresh', 'agent', 'client', new DateTimeImmutable());
+    $auth = new AccountAccessAuth(1, 1, 'web', RawTokenDto::fromString('refresh'), 'agent', 'client', new DateTimeImmutable());
     $activation = new AccountActivation(1, $account->email, Uuid::uuid4(), new DateTimeImmutable());
     $token = new Token(1, 1, TokenType::EMail, Uuid::uuid4(), new DateTimeImmutable());
 
@@ -105,7 +106,7 @@ test('repositories delegate persistence and queries to their store', function ()
     $tokenStore->shouldReceive('fetchAll')->andReturn([]);
     $tokenHydrator = Mockery::mock(TokenHydratorInterface::class);
     $tokenHydrator->shouldReceive('extract')->andReturnUsing(static fn($entity): array => ['id' => $entity->id]);
-    $tokenHydrator->shouldReceive('hydrateCollection')->andReturn(new \App\Token\Domain\TokenCollection());
+    $tokenHydrator->shouldReceive('hydrateCollection')->andReturn(new \App\Token\Domain\Entity\TokenCollection());
     $tokenRepo = new TokenRepository($tokenStore, $tokenHydrator);
     expect($tokenRepo->insert($token))->toBe(1)
         ->and($tokenRepo->update($token))->toBeTrue()

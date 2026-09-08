@@ -7,8 +7,8 @@ use App\Account\Identity\DTO\Account\Account as AccountDto;
 use App\Account\Identity\DTO\Account\AccountRegistration;
 use App\Account\Identity\DTO\Client\ClientIdentificationData;
 use App\Account\Identity\Infrastructure\Hydrator\AccountHydrator;
-use App\Mailing\Domain\EmailType;
-use App\Token\Application\Port\TokenLoggerInterface;
+use App\Mailing\Api\EmailType;
+use App\Token\Api\TokenLoggerInterface;
 use App\Token\Infrastructure\Hydrator\TokenHydrator;
 use Core\SharedKernel\Utils\UuidFactory;
 use DateTimeImmutable;
@@ -30,7 +30,7 @@ test('account DTO formats domain dates', function (): void {
         id: 1,
         uuid: Uuid::fromString(TEST_UUID),
         name: 'Alice',
-        password: 'hash',
+        hashedPassword: 'hash',
         email: new EmailType('alice@example.com'),
         registeredAt: new DateTimeImmutable('2024-01-02 03:04:05'),
         lastActionAt: new DateTimeImmutable('2024-01-03 04:05:06'),

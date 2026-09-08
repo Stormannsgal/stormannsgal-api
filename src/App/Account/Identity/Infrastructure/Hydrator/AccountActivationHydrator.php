@@ -8,7 +8,7 @@ use App\Account\Identity\Domain\AccountActivationCollection;
 use App\Account\Identity\Domain\AccountActivationCollectionInterface;
 use App\Account\Identity\Domain\AccountActivationInterface;
 use App\Account\Identity\Domain\Message\IdentityLogMessage;
-use App\Mailing\Domain\EmailType;
+use App\Mailing\Api\EmailType;
 use Core\Clock\DateTimeFormat;
 use DateTimeImmutable;
 use Ramsey\Uuid\UuidFactoryInterface;

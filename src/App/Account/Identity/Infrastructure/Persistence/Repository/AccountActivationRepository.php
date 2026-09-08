@@ -7,7 +7,7 @@ use App\Account\Identity\Domain\AccountActivationInterface;
 use App\Account\Identity\Domain\Repository\AccountActivationRepositoryInterface;
 use App\Account\Identity\Infrastructure\Hydrator\AccountActivationHydratorInterface;
 use App\Account\Identity\Infrastructure\Persistence\Table\AccountActivationStoreInterface;
-use App\Mailing\Domain\EmailType;
+use App\Mailing\Api\EmailType;
 use Core\Persistence\Repository\AbstractRepository;
 use Override;
 

@@ -2,7 +2,7 @@
 
 namespace App\Account\Identity\Api;
 
-use App\Mailing\Domain\EmailType;
+use App\Mailing\Api\EmailType;
 
 interface AccountRegisterServiceInterface
 {

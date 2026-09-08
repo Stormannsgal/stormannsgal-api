@@ -2,9 +2,9 @@
 
 namespace App\Token\Infrastructure\Persistence\Repository;
 
+use App\Token\Domain\Entity\TokenCollectionInterface;
+use App\Token\Domain\Entity\TokenInterface;
 use App\Token\Domain\Repository\TokenRepositoryInterface;
-use App\Token\Domain\TokenCollectionInterface;
-use App\Token\Domain\TokenInterface;
 use App\Token\Infrastructure\Hydrator\TokenHydratorInterface;
 use App\Token\Infrastructure\Persistence\Table\TokenStoreInterface;
 use Core\Persistence\Repository\AbstractRepository;

@@ -59,7 +59,7 @@ readonly final class AccountCreatorService
             id: null,
             uuid: $this->uuid->uuid7(),
             name: $accountRegistration->accountName,
-            password: password_hash($accountRegistration->password, PASSWORD_BCRYPT),
+            hashedPassword: password_hash($accountRegistration->password, PASSWORD_BCRYPT),
             email: $persistActivationToken->email,
             registeredAt: new DateTimeImmutable(),
             lastActionAt: new DateTimeImmutable(),

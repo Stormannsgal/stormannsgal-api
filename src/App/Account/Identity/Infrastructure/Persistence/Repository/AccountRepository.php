@@ -7,7 +7,7 @@ use App\Account\Identity\Domain\AccountInterface;
 use App\Account\Identity\Domain\Repository\AccountRepositoryInterface;
 use App\Account\Identity\Infrastructure\Hydrator\AccountHydratorInterface;
 use App\Account\Identity\Infrastructure\Persistence\Table\AccountStoreInterface;
-use App\Mailing\Domain\EmailType;
+use App\Mailing\Api\EmailType;
 use Core\Persistence\Repository\AbstractRepository;
 use Override;
 use Ramsey\Uuid\UuidInterface;

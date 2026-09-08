@@ -2,22 +2,23 @@
 
 namespace Tests\Integration\Composition;
 
-use DateTimeImmutable;
-use InvalidArgumentException;
-use App\Account\Identity\DTO\Account\AccountPassword;
-use App\Account\Identity\DTO\Account\AccountRegistration;
-use App\Account\Identity\DTO\Account\ApiMe;
-use App\Account\Identity\DTO\Token\AccountPasswordToken;
 use App\Account\Identity\Domain\Account;
 use App\Account\Identity\Domain\AccountAccessAuth;
 use App\Account\Identity\Domain\AccountAccessAuthCollection;
 use App\Account\Identity\Domain\AccountActivation;
 use App\Account\Identity\Domain\AccountActivationCollection;
 use App\Account\Identity\Domain\AccountCollection;
-use App\Mailing\Domain\EmailType;
-use App\Token\Domain\Enum\TokenType;
-use App\Token\Domain\Token;
-use App\Token\Domain\TokenCollection;
+use App\Account\Identity\DTO\Account\AccountPassword;
+use App\Account\Identity\DTO\Account\AccountRegistration;
+use App\Account\Identity\DTO\Account\ApiMe;
+use App\Account\Identity\DTO\Token\AccountPasswordToken;
+use App\Mailing\Api\EmailType;
+use App\Token\Api\DTO\RawTokenDto;
+use App\Token\Api\Enum\TokenType;
+use App\Token\Domain\Entity\Token;
+use App\Token\Domain\Entity\TokenCollection;
+use DateTimeImmutable;
+use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
 
 use function expect;
@@ -29,7 +30,7 @@ function accountFixture(): Account
         id: 1,
         uuid: Uuid::uuid4(),
         name: 'Test User',
-        password: 'password',
+        hashedPassword: 'password',
         email: EmailType::fromString('test@example.com'),
         registeredAt: new DateTimeImmutable('2024-01-01'),
         lastActionAt: new DateTimeImmutable('2024-01-02'),
@@ -48,7 +49,7 @@ test('DTO factories create their expected values', function () {
 
 test('collections accept matching entities and expose collection operations', function () {
     $account = accountFixture();
-    $auth = new AccountAccessAuth(1, 1, 'web', 'refresh', 'agent', 'hash', new DateTimeImmutable());
+    $auth = new AccountAccessAuth(1, 1, 'web', RawTokenDto::fromString('refresh'), 'agent', 'hash', new DateTimeImmutable());
     $activation = new AccountActivation(1, $account->email, Uuid::uuid4(), new DateTimeImmutable());
     $token = new Token(1, 1, TokenType::EMail, Uuid::uuid4(), new DateTimeImmutable());
 
@@ -99,7 +100,7 @@ test('collection iterator, filtering and missing offsets work', function () {
 test('readonly domain entities can be cloned with changed values', function () {
     $account = accountFixture();
 
-    expect($account->with(name: 'Changed'))
+    expect($account->withName('Changed'))
         ->toMatchObject(['name' => 'Changed', 'id' => 1])
         ->and($account->name)->toBe('Test User');
 });

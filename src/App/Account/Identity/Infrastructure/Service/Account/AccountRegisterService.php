@@ -9,7 +9,7 @@ use App\Account\Identity\Domain\AccountActivation;
 use App\Account\Identity\Domain\Message\IdentityLogMessage;
 use App\Account\Identity\Domain\Repository\AccountActivationRepositoryInterface;
 use App\Account\Identity\Infrastructure\Service\Token\ActivationTokenService;
-use App\Mailing\Domain\EmailType;
+use App\Mailing\Api\EmailType;
 use Core\Observability\EmailHasher;
 use Core\SharedKernel\Utils\UuidFactoryInterface;
 use DateTimeImmutable;

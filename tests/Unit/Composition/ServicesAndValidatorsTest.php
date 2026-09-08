@@ -12,6 +12,7 @@ use App\Account\Identity\Infrastructure\Service\Token\RefreshTokenService;
 use App\Account\Identity\Infrastructure\Validator\AccountActivationValidator;
 use App\Account\Identity\Infrastructure\Validator\AuthenticationValidator;
 use App\Account\Identity\Infrastructure\Validator\DateLessNow;
+use App\Account\Identity\Infrastructure\Validator\EMailValidator;
 use App\Account\Identity\Infrastructure\Validator\PasswordValidator;
 use App\Account\Identity\Middleware\Account\Authentication\AuthenticationValidationMiddleware;
 use App\Account\Identity\Middleware\Account\RequestAuthenticationMiddleware;
@@ -19,7 +20,6 @@ use App\Account\Identity\Middleware\Account\Validation\ActivationInputValidatorM
 use App\Account\Identity\Middleware\Account\Validation\EmailInputValidatorMiddleware;
 use App\Account\Identity\Middleware\Account\Validation\PasswordInputValidatorMiddleware;
 use App\Account\Identity\Middleware\Token\RefreshTokenViaBodyValidationMiddleware;
-use App\Mailing\Infrastructure\Validator\EMailValidator;
 use Core\Http\Exception\HttpInvalidArgumentException;
 use Core\Http\Exception\HttpUnauthorizedException;
 use Core\SharedKernel\Utils\UuidFactory;

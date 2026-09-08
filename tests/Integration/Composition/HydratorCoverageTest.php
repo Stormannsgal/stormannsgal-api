@@ -6,9 +6,9 @@ use App\Account\Identity\Api\IdentityLoggerInterface;
 use App\Account\Identity\Infrastructure\Hydrator\AccountAccessAuthHydrator;
 use App\Account\Identity\Infrastructure\Hydrator\AccountActivationHydrator;
 use App\Account\Identity\Infrastructure\Hydrator\AccountHydrator;
-use App\Mailing\Domain\EmailType;
-use App\Token\Application\Port\TokenLoggerInterface;
-use App\Token\Domain\Enum\TokenType;
+use App\Mailing\Api\EmailType;
+use App\Token\Api\Enum\TokenType;
+use App\Token\Api\TokenLoggerInterface;
 use App\Token\Infrastructure\Hydrator\TokenHydrator;
 use Core\SharedKernel\Utils\UuidFactoryInterface;
 
