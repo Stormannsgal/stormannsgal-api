@@ -159,8 +159,8 @@ migrate_db() {
         }"
     echo ""
     log "Running migrations..."
-    $DOCKER_COMPOSE exec $CONTAINER_PHP composer run doctrine migrations:sync-metadata-storage -- --no-interaction
-    $DOCKER_COMPOSE exec $CONTAINER_PHP composer run doctrine migrations:migrate -- --no-interaction
+    $DOCKER_COMPOSE exec $CONTAINER_PHP composer run doctrine -- migrations:sync-metadata-storage --no-interaction
+    $DOCKER_COMPOSE exec $CONTAINER_PHP composer run doctrine -- migrations:migrate --no-interaction
 }
 
 generate_openapi() {
@@ -334,6 +334,9 @@ case $1 in
   "composer")
     $DOCKER_COMPOSE exec $CONTAINER_PHP composer "${@:2}"
     ;;
+  "doctrine")
+    $DOCKER_COMPOSE exec $CONTAINER_PHP composer run doctrine -- "${@:2}"
+    ;;
   "php")
     $DOCKER_COMPOSE exec $CONTAINER_PHP php "${@:2}"
     ;;
@@ -357,7 +360,7 @@ case $1 in
     esac
     ;;
   *)
-    echo -e "Usage: $0 {${GREEN}start${NC}|${GREEN}stop${NC}|${GREEN}down${NC}|${GREEN}setup${NC}|${GREEN}reset${NC}|${GREEN}openapi${NC}|${GREEN}info${NC}|${GREEN}clean${NC}|${GREEN}composer${NC}|${GREEN}php${NC}|${GREEN}indocker${NC}}"
+    echo -e "Usage: $0 {${GREEN}start${NC}|${GREEN}stop${NC}|${GREEN}down${NC}|${GREEN}setup${NC}|${GREEN}reset${NC}|${GREEN}openapi${NC}|${GREEN}info${NC}|${GREEN}clean${NC}|${GREEN}composer${NC}|${GREEN}doctrine${NC}|${GREEN}php${NC}|${GREEN}indocker${NC}}"
     echo ""
     echo "Infrastructure Commands:"
     echo -e "  ${GREEN}start${NC}           - Start containers (checks for initialization first)"
@@ -374,6 +377,7 @@ case $1 in
     echo ""
     echo "Utility & Development:"
     echo -e "  ${GREEN}composer [...]${NC}  - Execute Composer commands"
+    echo -e "  ${GREEN}doctrine [...]${NC}  - Execute Doctrine commands (e.g. migrations:migrate)"
     echo -e "  ${GREEN}php [...]${NC}       - Execute PHP scripts"
     echo -e "  ${GREEN}test [...]${NC}      - Run PHPUnit tests"
     echo -e "  ${GREEN}logs [svc]${NC}      - Tail logs for all or a specific service"

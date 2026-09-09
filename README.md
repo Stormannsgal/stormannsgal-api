@@ -65,7 +65,7 @@ The management script consolidates all essential developer commands into a singl
 ### Usage
 Run the script from the project root directory:
 ```bash
-./bin/stornmannsgal [COMMAND]
+./bin/stormannsgal [COMMAND]
 ```
 
 #### Infrastructure Commands
@@ -89,6 +89,7 @@ Run the script from the project root directory:
 
 #### Development & Utility Commands
 *   **`composer [...]`**: Run Composer commands in the PHP container.
+*   **`doctrine [...]`**: Run Doctrine commands in the PHP container (e.g., `./bin/stormannsgal doctrine migrations:migrate --no-interaction`).
 *   **`php [...]`**: Run PHP commands in the PHP container.
 *   **`test [...]`**: Shortcut to run PHPUnit tests (passes arguments to PHPUnit).
 *   **`bash`**: Direct interactive shell access to the PHP container.
@@ -99,5 +100,5 @@ Run the script from the project root directory:
 
 ### 💡 Pro-Tip
 You can create an alias in your `.bashrc` or `.zshrc` to work even faster:
-`alias h='./bin/stormannsgal'` -> Then simply use `h setup`, `h info`, `h bash` or `h test`.
+`alias h='./bin/stormannsgal'` -> Then simply use `h setup`, `h info`, `h bash`, `h doctrine migrations:migrate` or `h test`.
 ```
