@@ -138,7 +138,7 @@ jobs:
             🔗 Commit URL: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             💬 Commit Message: ${{ github.event.head_commit.message }}
 
-            [🚀 Open API Docs](https://build.ownhackathon.de/api/docs)
+            [🚀 Open API Docs](https://build.stormannsgal.de/api/docs)
           webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}
 
       - name: Deployment Failure Notification
