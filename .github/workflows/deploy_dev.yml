@@ -27,8 +27,10 @@ jobs:
 
       - name: Notify Failure
         if: failure()
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        uses: rjstone/discord-webhook-notify@v2.3.0
         with:
+          username: Stormannsgal CI
+          avatarUrl: https://avatars.githubusercontent.com/u/148017302?s=400&u=6b3dff1d85f5b322d7f9a704fd57542d8ead6781&v=4
           severity: error
           details: Static Analysis (Lint/Stan/CS) failed.
           webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}
@@ -72,8 +74,10 @@ jobs:
 
       - name: Notify Failure
         if: failure()
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        uses: rjstone/discord-webhook-notify@v2.3.0
         with:
+          username: Stormannsgal CI
+          avatarUrl: https://avatars.githubusercontent.com/u/148017302?s=400&u=6b3dff1d85f5b322d7f9a704fd57542d8ead6781&v=4
           severity: error
           details: Integration Tests failed.
           webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}
@@ -114,14 +118,48 @@ jobs:
           passphrase: ${{ secrets.DEPLOY_KEY_PASS }}
           script: rm -rf ${{ secrets.DEPLOY_PATH_API_DEV }}/data/cache/*
 
-      - name: Deployment Notification
-        if: always()
-        uses: rjstone/discord-webhook-notify@v1.0.4
+      - name: Deployment Successful Notification
+        if: success()
+        uses: rjstone/discord-webhook-notify@v2.3.0
         with:
-          severity: ${{ job.status == 'success' && 'info' || 'error' }}
-          details: >-
-            ${{ job.status == 'success' 
-                && '[🚀 Successful deployment to dev!](https://dev.stormannsgal.de/api/docs)' 
-                || format('[❌ Deployment failed! View Logs](https://github.com/{0}/actions/runs/{1})', github.repository, github.run_id) 
-            }}
+          username: Stormannsgal CI
+          avatarUrl: https://avatars.githubusercontent.com/u/148017302?s=400&u=6b3dff1d85f5b322d7f9a704fd57542d8ead6781&v=4
+          severity: info
+          color: '#2ecc71'
+          title: Deployment Successful
+          content: |
+            ✅ **Successful deployment to dev!**
+          description: |
+            📌 Event: ${{ github.event_name }}
+            📦 Repo: ${{ github.repository }}
+            🌿 Ref: ${{ github.ref }}
+            🔄 Workflow: ${{ github.workflow }}
+            👤 Author: ${{ github.event.head_commit.author.username }} · Committer: ${{ github.event.head_commit.committer.username }} · Pusher: ${{ github.actor }}
+            🔗 Commit URL: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+            💬 Commit Message: ${{ github.event.head_commit.message }}
+
+            [🚀 Open API Docs](https://dev.ownhackathon.de/api/docs)
+          webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}
+
+      - name: Deployment Failure Notification
+        if: failure()
+        uses: rjstone/discord-webhook-notify@v2.3.0
+        with:
+          username: Stormannsgal CI
+          avatarUrl: https://avatars.githubusercontent.com/u/148017302?s=400&u=6b3dff1d85f5b322d7f9a704fd57542d8ead6781&v=4
+          severity: error
+          color: '#e74c3c'
+          title: Deployment Failed
+          content: |
+            ❌ **Deployment to dev failed!**
+          description: |
+            📌 Event: ${{ github.event_name }}
+            📦 Repo: ${{ github.repository }}
+            🌿 Ref: ${{ github.ref }}
+            🔄 Workflow: ${{ github.workflow }}
+            👤 Author: ${{ github.event.head_commit.author.username }} · Committer: ${{ github.event.head_commit.committer.username }} · Pusher: ${{ github.actor }}
+            🔗 Commit URL: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+            💬 Commit Message: ${{ github.event.head_commit.message }}
+          details: |
+            [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
           webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}

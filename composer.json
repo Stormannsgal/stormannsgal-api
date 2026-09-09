@@ -64,6 +64,7 @@
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+    "deptrac/deptrac": "^4.7",
     "doctrine/migrations": "^3.6",
     "fakerphp/faker": "^1.24",
     "filp/whoops": "^2.7.1",
@@ -110,6 +111,7 @@
       "@phplint",
       "@phpcs",
       "@phpstan",
+      "@deptrac",
       "@test"
     ],
     "clear-config-cache": "php bin/clear-config-cache.php",
@@ -124,6 +126,7 @@
     "phplint": "vendor/bin/phplint",
     "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
     "pest": "vendor/bin/pest",
+    "deptrac": "vendor/bin/deptrac analyse",
     "post-create-project-cmd": [
       "@development-enable"
     ],

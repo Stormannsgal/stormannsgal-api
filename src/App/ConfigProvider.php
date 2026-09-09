@@ -12,7 +12,6 @@ class ConfigProvider
             Account\ConfigProvider::class,
             Mailing\ConfigProvider::class,
             Token\ConfigProvider::class,
-
         ]);
 
         return $aggregator->getMergedConfig();

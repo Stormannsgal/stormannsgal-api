@@ -1,0 +1,38 @@
+<?php declare(strict_types=1);
+
+namespace App\Account\Identity\Api\DTO\Account;
+
+use Core\Serialization\DataType;
+use JetBrains\PhpStorm\ArrayShape;
+use OpenApi\Attributes as OA;
+
+#[OA\Schema(required: ['email', 'password'])]
+readonly final class AuthenticationRequest
+{
+    public function __construct(
+        #[OA\Property(
+            description: 'The E-Mail from Account',
+            type: DataType::STRING->value,
+        )]
+        public string $email,
+        #[OA\Property(
+            description: 'The Password from Account',
+            type: DataType::STRING->value,
+        )]
+        public string $password,
+    ) {
+    }
+
+    public static function fromArray(
+        #[ArrayShape([
+            'email' => 'string',
+            'password' => 'string',
+        ])]
+        array $data,
+    ): self {
+        return new self(
+            email: $data['email'] ?? '',
+            password: $data['password'] ?? '',
+        );
+    }
+}

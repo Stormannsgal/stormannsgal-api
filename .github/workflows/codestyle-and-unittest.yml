@@ -30,10 +30,15 @@ jobs:
       - name: Run PHP Codesniffer
         run: composer run-script phpcs
 
+      - name: Run PHP Deptrac
+        run: composer run-script deptrac
+
       - name: Notify Failure
         if: failure()
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        uses: rjstone/discord-webhook-notify@v2.3.0
         with:
+          username: Stormannsgal CI
+          avatarUrl: https://avatars.githubusercontent.com/u/148017302?s=400&u=6b3dff1d85f5b322d7f9a704fd57542d8ead6781&v=4
           severity: error
           details: Static Analysis (Lint/Stan/CS) failed.
           webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}
@@ -57,12 +62,12 @@ jobs:
           - 3306:3306
         options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
     env:
+      APP_ENV: testing
       DB_DATABASE: db
       DB_USERNAME: dev
       DB_PASSWORD: dev
       DB_HOST: 127.0.0.1
       DB_PORT: 3306
-      APP_ENV: action
     steps:
       - uses: actions/checkout@v6.0.2
 
@@ -72,13 +77,15 @@ jobs:
       - name: Run Tests
         run: ./vendor/bin/pest --configuration=phpunit.xml --compact
         env:
-          APP_ENV: action
+          APP_ENV: testing
           DB_HOST: 127.0.0.1
 
       - name: Notify Failure
         if: failure()
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        uses: rjstone/discord-webhook-notify@v2.3.0
         with:
+          username: Stormannsgal CI
+          avatarUrl: https://avatars.githubusercontent.com/u/148017302?s=400&u=6b3dff1d85f5b322d7f9a704fd57542d8ead6781&v=4
           severity: error
           details: Integration Tests failed.
           webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}
@@ -92,16 +99,20 @@ jobs:
     steps:
       - name: Check Info Success
         if: ${{ needs.static-analysis.result == 'success' && needs.tests.result == 'success' }}
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        uses: rjstone/discord-webhook-notify@v2.3.0
         with:
+          username: Stormannsgal CI
+          avatarUrl: https://avatars.githubusercontent.com/u/148017302?s=400&u=6b3dff1d85f5b322d7f9a704fd57542d8ead6781&v=4
           severity: info
           details: Checks successfully executed on API.
           webhookUrl: ${{ secrets.WEBHOOK_DISCORD_URL }}
 
       - name: Check Info Failure
         if: ${{ needs.static-analysis.result != 'success' || needs.tests.result != 'success' }}
-        uses: rjstone/discord-webhook-notify@v1.0.4
+        uses: rjstone/discord-webhook-notify@v2.3.0
         with:
+          username: Stormannsgal CI
+          avatarUrl: https://avatars.githubusercontent.com/u/148017302?s=400&u=6b3dff1d85f5b322d7f9a704fd57542d8ead6781&v=4
           severity: error
           details: >-
             ${{ format('❌ Incorrect checks during the API check. [View Logs](https://github.com/{0}/actions/runs/{1})', 

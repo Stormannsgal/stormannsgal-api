@@ -2,10 +2,9 @@
 
 namespace App\Account\Identity;
 
-use App\Account\Identity\Api\AccountRegisterServiceInterface;
-use App\Account\Identity\Api\ActivityLoggerInterface;
-use App\Account\Identity\Api\EmailHashSaltProviderInterface;
-use App\Account\Identity\Api\IdentityLoggerInterface;
+use App\Account\Identity\Api\AccountReaderInterface;
+use App\Account\Identity\Api\RequireAuthenticatedAccountMiddlewareInterface;
+use App\Account\Identity\Application\AccountReader;
 use App\Account\Identity\Domain\Repository\AccountAccessAuthRepositoryInterface;
 use App\Account\Identity\Domain\Repository\AccountActivationRepositoryInterface;
 use App\Account\Identity\Domain\Repository\AccountRepositoryInterface;
@@ -25,6 +24,8 @@ use App\Account\Identity\Infrastructure\Hydrator\AccountActivationHydrator;
 use App\Account\Identity\Infrastructure\Hydrator\AccountActivationHydratorInterface;
 use App\Account\Identity\Infrastructure\Hydrator\AccountHydrator;
 use App\Account\Identity\Infrastructure\Hydrator\AccountHydratorInterface;
+use App\Account\Identity\Infrastructure\Logger\ActivityLoggerInterface;
+use App\Account\Identity\Infrastructure\Logger\IdentityLoggerInterface;
 use App\Account\Identity\Infrastructure\Persistence\Repository\AccountAccessAuthRepository;
 use App\Account\Identity\Infrastructure\Persistence\Repository\AccountActivationRepository;
 use App\Account\Identity\Infrastructure\Persistence\Repository\AccountRepository;
@@ -34,9 +35,11 @@ use App\Account\Identity\Infrastructure\Persistence\Table\AccountActivationStore
 use App\Account\Identity\Infrastructure\Persistence\Table\AccountActivationTable;
 use App\Account\Identity\Infrastructure\Persistence\Table\AccountStoreInterface;
 use App\Account\Identity\Infrastructure\Persistence\Table\AccountTable;
+use App\Account\Identity\Infrastructure\Provider\EmailHashSaltProviderInterface;
 use App\Account\Identity\Infrastructure\Service\Account\AccountAuthenticationService;
 use App\Account\Identity\Infrastructure\Service\Account\AccountCreatorService;
 use App\Account\Identity\Infrastructure\Service\Account\AccountRegisterService;
+use App\Account\Identity\Infrastructure\Service\Account\AccountRegisterServiceInterface;
 use App\Account\Identity\Infrastructure\Service\Account\AccountResolver;
 use App\Account\Identity\Infrastructure\Service\Account\AccountService;
 use App\Account\Identity\Infrastructure\Service\Account\PasswordChangeService;
@@ -201,6 +204,8 @@ readonly class ConfigProvider
                 AccountStoreInterface::class => AccountTable::class,
                 AccountAccessAuthStoreInterface::class => AccountAccessAuthTable::class,
                 AccountActivationStoreInterface::class => AccountActivationTable::class,
+                AccountReaderInterface::class => AccountReader::class,
+                RequireAuthenticatedAccountMiddlewareInterface::class => RequireLoginMiddleware::class,
             ],
             'invokables' => [
             ],
@@ -258,6 +263,7 @@ readonly class ConfigProvider
                 AccountPasswordHandler::class => ConfigAbstractFactory::class,
                 LogoutHandler::class => ConfigAbstractFactory::class,
                 AccountResolver::class => InvokableFactory::class,
+                AccountReader::class => ConfigAbstractFactory::class,
                 RequireLoginMiddleware::class => ConfigAbstractFactory::class,
             ],
 
@@ -419,6 +425,9 @@ readonly class ConfigProvider
             LogoutHandler::class => [
                 AccountService::class,
                 AccountResolver::class,
+            ],
+            AccountReader::class => [
+                AccountRepositoryInterface::class,
             ],
             RequireLoginMiddleware::class => [
                 AccountResolver::class,

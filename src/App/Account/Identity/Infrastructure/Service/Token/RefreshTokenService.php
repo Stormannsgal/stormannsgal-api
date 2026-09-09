@@ -2,6 +2,9 @@
 
 namespace App\Account\Identity\Infrastructure\Service\Token;
 
+use App\Account\Identity\Api\DTO\Client\ClientIdentification;
+use App\Account\Identity\Api\DTO\Token\AccessToken;
+use App\Account\Identity\Api\DTO\Token\RefreshToken;
 use App\Account\Identity\Domain\AccountAccessAuthInterface;
 use App\Account\Identity\Domain\AccountInterface;
 use App\Account\Identity\Domain\Exception\AccountNotFoundException;
@@ -9,12 +12,9 @@ use App\Account\Identity\Domain\Exception\InvalidRefreshTokenException;
 use App\Account\Identity\Domain\Exception\SecurityBreachException;
 use App\Account\Identity\Domain\Repository\AccountAccessAuthRepositoryInterface;
 use App\Account\Identity\Domain\Repository\AccountRepositoryInterface;
-use App\Account\Identity\DTO\Client\ClientIdentification;
-use App\Account\Identity\DTO\Token\AccessToken;
-use App\Account\Identity\DTO\Token\JwtTokenConfig;
-use App\Account\Identity\DTO\Token\RefreshToken;
-use App\Token\Infrastructure\Trait\JwtTokenTrait;
+use App\Token\Api\DTO\JwtTokenConfig;
 use Core\SharedKernel\Domain\Exception\EmptyResultException;
+use Core\SharedKernel\Trait\JwtTokenTrait;
 use Firebase\JWT\JWT;
 
 use function time;
