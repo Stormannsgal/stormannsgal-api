@@ -89,7 +89,7 @@ Run the script from the project root directory:
 
 #### Development & Utility Commands
 *   **`composer [...]`**: Run Composer commands in the PHP container.
-*   **`doctrine [...]`**: Run Doctrine commands in the PHP container (e.g., `./bin/stormannsgal doctrine migrations:migrate --no-interaction`).
+*   **`doctrine [...]`**: Run Doctrine commands in the PHP container (e.g., `./bin/stormannsgal doctrine migrations:migrate --no-interaction`). `migrations:generate` accepts an optional class name suffix, e.g. `./bin/stormannsgal doctrine migrations:generate CreateXY` creates `Version20260909202622_CreateXY`.
 *   **`php [...]`**: Run PHP commands in the PHP container.
 *   **`test [...]`**: Shortcut to run PHPUnit tests (passes arguments to PHPUnit).
 *   **`bash`**: Direct interactive shell access to the PHP container.

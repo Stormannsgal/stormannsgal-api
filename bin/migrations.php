@@ -2,14 +2,18 @@
 <?php declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/GenerateMigrationCommand.php';
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\Configuration\Connection\ExistingConnection;
 use Doctrine\Migrations\Configuration\Migration\ExistingConfiguration;
 use Doctrine\Migrations\DependencyFactory;
+use Doctrine\Migrations\Generator\ClassNameGenerator;
 use Doctrine\Migrations\Metadata\Storage\TableMetadataStorageConfiguration;
 use Doctrine\Migrations\Tools\Console\Command;
+use Stormannsgal\Cli\GenerateMigrationCommand;
+use Stormannsgal\Cli\SuffixableClassNameGenerator;
 use Symfony\Component\Console\Application;
 
 $env = getenv('APP_ENV') ?? 'global';
@@ -51,6 +55,7 @@ $dependencyFactory = DependencyFactory::fromConnection(
 );
 
 $dependencyFactory->setService(Psr\Container\ContainerInterface::class, $container);
+$dependencyFactory->setService(ClassNameGenerator::class, new SuffixableClassNameGenerator());
 
 $cli = new Application('Doctrine Migrations');
 $cli->setCatchExceptions(true);
@@ -58,7 +63,7 @@ $cli->setCatchExceptions(true);
 $cli->addCommands([
     new Command\DumpSchemaCommand($dependencyFactory),
     new Command\ExecuteCommand($dependencyFactory),
-    new Command\GenerateCommand($dependencyFactory),
+    new GenerateMigrationCommand($dependencyFactory),
     new Command\LatestCommand($dependencyFactory),
     new Command\ListCommand($dependencyFactory),
     new Command\MigrateCommand($dependencyFactory),
