@@ -98,6 +98,7 @@
       "App\\": "src/App/",
       "Core\\": "src/Core/",
       "Game\\": "src/Game",
+      "Game\\Location\\": "src/Game/Location",
       "Stormannsgal\\": "src/"
     }
   },

@@ -11,6 +11,7 @@ class ConfigProvider
         $aggregator = new ConfigAggregator([
             Shared\ConfigProvider::class,
             Character\ConfigProvider::class,
+            Location\ConfigProvider::class,
         ]);
 
         return $aggregator->getMergedConfig();
