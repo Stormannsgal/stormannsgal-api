@@ -13,11 +13,11 @@ final class Version20231103224047_CreateTokenTable extends AbstractMigration
     {
         $table = $schema->createTable('Token');
 
-        $table->addColumn('id', Types::INTEGER, ['autoincrement' => true, 'unsigned' => true,]);
-        $table->addColumn('accountId', Types::INTEGER, ['unsigned' => true,]);
-        $table->addColumn('token', Types::GUID, );
-        $table->addColumn('tokenType', Types::SMALLINT, ['unsigned' => true, 'length' => 2,]);
-        $table->addColumn('createdAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP',]);
+        $table->addColumn('id', Types::INTEGER, ['autoincrement' => true, 'unsigned' => true, 'comment' => 'Unique identifier of the token record']);
+        $table->addColumn('accountId', Types::INTEGER, ['unsigned' => true, 'comment' => 'Account the token belongs to']);
+        $table->addColumn('token', Types::GUID, ['comment' => 'Unique token value']);
+        $table->addColumn('tokenType', Types::SMALLINT, ['unsigned' => true, 'length' => 2, 'comment' => 'Numeric type of the token']);
+        $table->addColumn('createdAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP', 'comment' => 'Timestamp when the token was created']);
 
         $table->addPrimaryKeyConstraint(
             PrimaryKeyConstraint::editor()

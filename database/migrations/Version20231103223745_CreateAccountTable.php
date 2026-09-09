@@ -13,13 +13,13 @@ final class Version20231103223745_CreateAccountTable extends AbstractMigration
     {
         $table = $schema->createTable('Account');
 
-        $table->addColumn('id', Types::INTEGER, ['autoincrement' => true,]);
-        $table->addColumn('uuid', Types::GUID, );
-        $table->addColumn('name', Types::STRING, ['length' => 64,]);
-        $table->addColumn('password', Types::STRING, ['length' => 255,]);
-        $table->addColumn('email', Types::STRING, ['length' => 512,]);
-        $table->addColumn('registeredAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP',]);
-        $table->addColumn('lastActionAt', Types::DATETIME_IMMUTABLE, ['notnull' => false]);
+        $table->addColumn('id', Types::INTEGER, ['autoincrement' => true, 'comment' => 'Unique account identifier']);
+        $table->addColumn('uuid', Types::GUID, ['comment' => 'Public account identifier used by the API']);
+        $table->addColumn('name', Types::STRING, ['length' => 64, 'comment' => 'Unique display and login name']);
+        $table->addColumn('password', Types::STRING, ['length' => 255, 'comment' => 'Bcrypt-hashed password']);
+        $table->addColumn('email', Types::STRING, ['length' => 512, 'comment' => 'Email address used for login and notifications']);
+        $table->addColumn('registeredAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP', 'comment' => 'Timestamp when the account was registered']);
+        $table->addColumn('lastActionAt', Types::DATETIME_IMMUTABLE, ['notnull' => false, 'comment' => 'Timestamp of the last recorded user activity']);
 
         $table->addPrimaryKeyConstraint(
             PrimaryKeyConstraint::editor()

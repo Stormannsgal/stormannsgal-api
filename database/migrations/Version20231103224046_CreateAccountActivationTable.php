@@ -13,10 +13,10 @@ final class Version20231103224046_CreateAccountActivationTable extends AbstractM
     {
         $table = $schema->createTable('AccountActivation');
 
-        $table->addColumn('id', Types::INTEGER, ['autoincrement' => true, 'unsigned' => true,]);
-        $table->addColumn('email', Types::STRING, ['length' => 512,]);
-        $table->addColumn('token', Types::GUID, );
-        $table->addColumn('createdAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP',]);
+        $table->addColumn('id', Types::INTEGER, ['autoincrement' => true, 'unsigned' => true, 'comment' => 'Unique identifier of the activation request']);
+        $table->addColumn('email', Types::STRING, ['length' => 512, 'comment' => 'Email address to be activated']);
+        $table->addColumn('token', Types::GUID, ['comment' => 'One-time activation token']);
+        $table->addColumn('createdAt', Types::DATETIME_IMMUTABLE, ['default' => 'CURRENT_TIMESTAMP', 'comment' => 'Timestamp when the activation token was created']);
 
         $table->addPrimaryKeyConstraint(
             PrimaryKeyConstraint::editor()
