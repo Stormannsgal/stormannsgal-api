@@ -73,7 +73,7 @@ Run the script from the project root directory:
 *   **`stop`** / **`down`**: Pauses containers or stops/removes containers and networks.
 *   **`setup`**: Complete initial setup (Start, Install, Migrate, OpenAPI, Info).
 *   **`services`**: Lists all available service names used in this project.
-*   **`logs [svc]`**: Tails logs for all or a specific service (e.g., `./bin/stormannsgal logs php`).
+*   **`logs [svc]`**: Tails logs for all or a specific service (e.g., `./bin/stormannsgal logs php`); `logs prune` cleans up log files.
 *   **`info`**: Displays connectivity info (URLs, Ports, and DB Credentials) for running services.
 *   **`openapi`**: Regenerates the API documentation.
 
